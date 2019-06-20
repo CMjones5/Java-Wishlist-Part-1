@@ -25,8 +25,19 @@ public class MainMenu {
     Double productPrice = Double.parseDouble(reader.nextLine());
     System.out.println("Enter product url:");
     String productUrl = reader.nextLine();
-    System.out.println("Enter product category:");
+    System.out.println("Type in either the category name or 'no'");
     String productCategory = reader.nextLine();
+
+    TypedQuery<String> queryCategoryNames = em.createQuery("SELECT c FROM Category c WHERE c.name = " + productCategory, String.class);
+    List<String> categoryNames = queryCategoryNames.getResultList();
+
+    if (categoryNames.size() > 0) {
+      // this categoryName already exists
+    }
+    
+    if (productCategory.equals("no")) {
+      productCategory = "None";
+    }
 
     Product newProduct = new Product();
     Category newCategory = new Category();
@@ -37,6 +48,10 @@ public class MainMenu {
     newProduct.setCategory(newCategory);
 
     try {
+      em.getTransaction().begin();
+      em.persist(newCategory);
+      em.getTransaction().commit();
+
       em.getTransaction().begin();
       em.persist(newProduct);
       em.getTransaction().commit();

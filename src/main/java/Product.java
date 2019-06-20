@@ -27,8 +27,9 @@ public class Product {
   @Column(name="url", nullable = false)
   private String url;
 
-  @Column(name="category_id")
-  private long category_id;
+//  @Column(name="category_id", insertable = false, updatable = false)
+//  private long category_id;
+  // the same as the below defined category_id
 
   @ManyToOne
   @JoinColumn(name = "category_id")
@@ -42,13 +43,13 @@ public class Product {
     this.category = category;
   }
 
-  public long getCategory_id() {
-    return category_id;
-  }
-
-  public void setCategory_id(long category_id) {
-    this.category_id = category_id;
-  }
+//  public long getCategory_id() {
+//    return category_id;
+//  }
+//
+//  public void setCategory_id(long category_id) {
+//    this.category_id = category_id;
+//  }
 
   public String getName() {
     return name;
